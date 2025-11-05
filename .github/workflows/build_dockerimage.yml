@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker container      
-        run: docker build -t ghcr.io/${{ github.actor }}/IMAGE_NAME:latest . 
+        run: docker build -t ghcr.io/${{ github.actor }}/$IMAGE_NAME:latest . 
 
       - name: Push the image to the GitHub Container Registry
         run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
