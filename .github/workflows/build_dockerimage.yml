@@ -5,13 +5,15 @@ on: [push]
 env:
   SERVICE_NAME: space-shiny
 
-   build:
+jobs:
+
+  build: 
      runs-on: ubuntu-latest
 
-    permissions:
+     permissions:
       packages: write
 
-    steps:
+     steps:
       - uses: actions/checkout@v4
 
       - name: Setup Docker buildx
