@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y sudo \
     libssl1.1
 
 # system library dependency for the babynames app
-##RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     libmpfr-dev
 
 # basic shiny functionality
