@@ -3,7 +3,7 @@ FROM openanalytics/r-base
 MAINTAINER E Breitmoser "e.breitmoser@epcc.ed.ac.uk"
 
 # system libraries of general use
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install curl -y \
     sudo \
     pandoc \
     pandoc-citeproc \
@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     libxt-dev \
     libssl-dev \
-    libssh2-1-dev #\
-   ## libssl1.1
+    libssh2-1-dev \
+    libssl1.1
 
 # system library dependency for the babynames app
 ##RUN apt-get update && apt-get install -y \
