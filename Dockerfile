@@ -3,7 +3,7 @@ FROM openanalytics/r-base
 MAINTAINER E Breitmoser "e.breitmoser@epcc.ed.ac.uk"
 
 # system libraries of general use
-RUN apt update && apt install curl -y \
+RUN apt-get update && apt-get install -y \
     sudo \
     pandoc \
     pandoc-citeproc \
