@@ -8,12 +8,14 @@ env:
 jobs:
 
   build: 
-     runs-on: ubuntu-latest
-
-     permissions:
+   runs-on: ubuntu-latest
+   env:
+      IMAGE_NAME: babynames
+     
+   permissions:
       packages: write
 
-     steps:
+   steps:
       - uses: actions/checkout@v4
 
       - name: Setup Docker buildx
@@ -26,24 +28,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract Docker metadata
-        id: metadata
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=sha,format=short,prefix=,suffix=
-            type=sha,format=long,prefix=,suffix=
-            type=ref,event=branch,prefix=,suffix=
+      - name: Build docker container      
+        run: docker build -t $IMAGE_NAME:latest . 
 
-      - name: Build and push the container image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/amd64, linux/arm64
-          push: true
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
-
-  
-  
