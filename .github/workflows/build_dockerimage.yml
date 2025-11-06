@@ -6,14 +6,13 @@ on: [push]
 
 env:
   SERVICE_NAME: space-shiny
+  IMAGE_NAME: babynames
 
 jobs:
 
   build: 
    runs-on: ubuntu-latest
-   env:
-      IMAGE_NAME: babynames
-     
+   
    permissions:
       packages: write
 
