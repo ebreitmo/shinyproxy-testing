@@ -57,13 +57,13 @@ jobs:
         run: |
           docker run \
             --rm --detach -p 3838:3838 \
-            --name $SERVICE_NAME ghcr.io/${{ github.actor }}:$IMAGE_NAME:latest
+            --name $SERVICE_NAME ghcr.io/${{ github.actor }}/$IMAGE_NAME:latest
           sleep 3 # allow some time for the service to start
 
       - name: Run tests using the container image
         run: |
           docker exec $SERVICE_NAME \
-            curl --silent --fail localhost:8080/health
+            curl --silent --fail localhost:3838/health
           docker exec $SERVICE_NAME \
-            curl --silent --fail localhost:8080/05024756-765e-41a9-89d7-1407436d9a58
+            curl --silent --fail localhost:3838/05024756-765e-41a9-89d7-1407436d9a58
 
