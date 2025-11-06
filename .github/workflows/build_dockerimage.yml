@@ -1,3 +1,5 @@
+
+
 name: Build docker image
 
 on: [push]
@@ -34,4 +36,35 @@ jobs:
       - name: Push the image to the GitHub Container Registry
         run: docker push ghcr.io/${{ github.actor }}/$IMAGE_NAME:latest
   
+  test-image:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
+
+    steps:
+      - name: Log into ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull the image from GitHub Container Registry
+        run: docker pull ghcr.io/${{ github.actor}}:$IMAGE_NAME:latest
+
+      - name: Start ${{ env.SERVICE_NAME }}
+        run: |
+          docker run \
+            --rm --detach -p 3838:3838 \
+            --name $SERVICE_NAME ghcr.io/${{ github.actor }}:$IMAGE_NAME:latest
+          sleep 3 # allow some time for the service to start
+
+      - name: Run tests using the container image
+        run: |
+          docker exec $SERVICE_NAME \
+            curl --silent --fail localhost:8080/health
+          docker exec $SERVICE_NAME \
+            curl --silent --fail localhost:8080/05024756-765e-41a9-89d7-1407436d9a58
 
