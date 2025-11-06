@@ -51,7 +51,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull the image from GitHub Container Registry
-        run: docker pull ghcr.io/${{ github.actor}}:$IMAGE_NAME:latest
+        run: docker pull ghcr.io/${{ github.actor}}/$IMAGE_NAME:latest
 
       - name: Start ${{ env.SERVICE_NAME }}
         run: |
