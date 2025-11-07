@@ -17,8 +17,10 @@ RUN apt-get update && apt-get install -y \
 
 # system library dependency for the babynames app
 RUN apt-get update && apt-get install -y \
-    libmpfr-dev \
-    curl
+    libmpfr-dev 
+
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost:3838 || exit 1    
 
 # basic shiny functionality
 RUN R -e "install.packages(c('promises', 'httpuv'), repos='https://cloud.r-project.org/')"
