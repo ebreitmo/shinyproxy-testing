@@ -19,9 +19,6 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
     libmpfr-dev 
 
-HEALTHCHECK --interval=5m --timeout=3s \
-  CMD curl -f http://localhost:3838 || exit 1    
-
 # basic shiny functionality
 RUN R -e "install.packages(c('promises', 'httpuv'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-project.org/')"
@@ -39,3 +36,6 @@ COPY babynames /root/babynames
 EXPOSE 3838
 
 CMD ["R", "-e", "shiny::runApp('/root/babynames',,host='0.0.0.0',port=3838)"]
+
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost:3838 || exit 1    
