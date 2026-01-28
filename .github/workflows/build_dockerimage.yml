@@ -2,7 +2,7 @@
 
 name: Build docker image
 
-on: [push]
+on: [pull_request]
 
 env:
   SERVICE_NAME: space-shiny
